@@ -3,6 +3,7 @@ package cmd
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql" // for mysql support
@@ -28,9 +29,8 @@ func Dump() cli.Command {
 			},
 			cli.StringFlag{
 				Name:   "o,output",
-				Usage:  "output file name",
+				Usage:  "output file name (if not specified, stdout is used)",
 				EnvVar: "OUTPUT",
-				Value:  "output.csv",
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -46,7 +46,7 @@ func Dump() cli.Command {
 	}
 }
 
-func dumpSQL(connStr, query, filename string) error {
+func dumpSQL(connStr, query, output string) error {
 
 	if connStr == "" {
 		return fmt.Errorf("db-url attribute not provided [DATABASE_URL]")
@@ -66,7 +66,10 @@ func dumpSQL(connStr, query, filename string) error {
 		return err
 	}
 
-	fmt.Printf("Exporting to file %s", filename)
+	fmt.Printf("Exporting to file %s", output)
 
-	return sqltocsv.WriteFile(filename, rows)
+	if output == "" {
+		return sqltocsv.Write(os.Stdout, rows)
+	}
+	return sqltocsv.WriteFile(output, rows)
 }
