@@ -11,7 +11,7 @@ script:
   - make build tag push
 
 after_success:
-  - if  [ "${TRAVIS_TAG}" != "" ] && [ "${TRAVIS_GO_VERSION}" == "1.7" ];gox -output "dist/{{.Dir}}-{{.OS}}-{{.Arch}}";fi
+  - if [ "${TRAVIS_TAG}" != "" ] && [ "${TRAVIS_GO_VERSION}" == "1.7" ]; then gox -output "dist/{{.Dir}}-{{.OS}}-{{.Arch}}";fi
 
 deploy:
   provider: releases
