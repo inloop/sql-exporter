@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql" // for mysql support
 	"github.com/joho/sqltocsv"
@@ -66,10 +67,17 @@ func dumpSQL(connStr, query, output string) error {
 		return err
 	}
 
-	fmt.Printf("Exporting to file %s", output)
+	columns, err := rows.Columns()
+	if err != nil {
+		return err
+	}
+
+	csvConverter := sqltocsv.New(rows)
+	csvConverter.Headers = columns
+	csvConverter.TimeFormat = time.RFC3339
 
 	if output == "" {
-		return sqltocsv.Write(os.Stdout, rows)
+		return csvConverter.Write(os.Stdout)
 	}
-	return sqltocsv.WriteFile(output, rows)
+	return csvConverter.WriteFile(output)
 }
