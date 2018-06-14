@@ -1,10 +1,9 @@
 FROM alpine:3.5
 
-COPY bin/devops-alpine /devops
+COPY bin/binary-alpine /sql-exporter
 
 # https://serverfault.com/questions/772227/chmod-not-working-correctly-in-docker
-RUN apk --update add docker && \
-    mv /devops /usr/local/bin/devops && \
-    chmod +x /usr/local/bin/devops
+RUN mv /sql-exporter /usr/local/bin/sql-exporter && \
+    chmod +x /usr/local/bin/sql-exporter
 
 ENTRYPOINT []
