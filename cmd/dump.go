@@ -56,8 +56,9 @@ func dumpSQL(connStr, query, output string) error {
 		return fmt.Errorf("query attribute not provided [QUERY]")
 	}
 
-	connType := strings.Split(connStr, ":")[0]
-	db, err := sql.Open(connType, connStr)
+	connType := strings.Split(connStr, "://")[0]
+	connURL := strings.Split(connStr, "://")[1]
+	db, err := sql.Open(connType, connURL)
 	if err != nil {
 		return cli.NewExitError(fmt.Sprintf("Error opening testdb %v", err), 1)
 	}
