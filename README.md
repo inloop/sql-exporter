@@ -11,7 +11,7 @@ Basically download binary, make it executable and that's it.
 ```
 # macos example
 # releases: https://github.com/inloop/sql-exporter/releases
-curl -L https://github.com/inloop/sql-exporter/releases/download/0.1.3/sql-exporter-darwin-amd64 > /usr/local/bin/sql-exporter
+curl -L https://github.com/inloop/sql-exporter/releases/download/0.1.4/sql-exporter-darwin-amd64 > /usr/local/bin/sql-exporter
 chmod +x /usr/local/bin/sql-exporter
 ```
 

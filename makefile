@@ -18,7 +18,7 @@ build:
 tag:
 	docker tag $(GIT_TAG) $(BUILD_TAG)
 	docker tag $(GIT_TAG) $(LATEST_TAG)
-	docker tag $(GIT_TAG) inloopeu/kontena-git-cli
+	docker tag $(GIT_TAG) $(OWNER)/$(IMAGE_NAME)
 
 login:
 	@docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
@@ -26,7 +26,7 @@ push: login
 	# docker push $(GIT_TAG)
 	# docker push $(BUILD_TAG)
 	docker push $(LATEST_TAG)
-	docker push inloopeu/kontena-git-cli
+	docker push $(OWNER)/$(IMAGE_NAME)
 
 
 build-local:
